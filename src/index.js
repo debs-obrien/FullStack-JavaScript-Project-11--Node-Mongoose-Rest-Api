@@ -9,6 +9,8 @@ const http = require('http');
 const mongoose = require('mongoose');
 const routes = require('./routes');
 const jsonParser = require('body-parser').json;
+const seeder = require('mongoose-seeder'),
+    data = require('./data/data.json');
 
 //set up database
 const db = mongoose.connect('mongodb://localhost:27017/courseRating', {
@@ -22,13 +24,14 @@ db.on('error', function(err){
 db.once('open', function() {
     console.log('db connected');
     //get seeded data
-    const seeder = require('mongoose-seeder'),
-            data = require('./data/data.json');
 
-    seeder.seed(data).then(function(dbData) {
+
+    seeder.seed(data, {}, () => {
+        console.log('data seeded')
+    }).then(function(dbData) {
         // The database objects are stored in dbData
     }).catch(function(err) {
-        // handle error
+        console.log(err);
     });
 });
 
