@@ -1,3 +1,4 @@
+/*
 "use strict";
 const express = require('express');
 const router = express.Router();
@@ -5,8 +6,19 @@ const User = require('../models/user');
 const Course = require('../models/course');
 const Review = require('../models/review');
 
-/* GET home page. */
+/!* GET home page. *!/
 router.get('/api/users', function(req, res, next) {
+    res.status(200);
+    User.find({}, function(err, users){
+        if(err) return next(err);
+        res.json(users);
+        console.log(users)
+    });
+
+});
+
+/!* GET courses page. *!/
+router.get('/api/courses', function(req, res, next) {
     res.status(200);
     User.find({}, function(err, users){
         if(err) return next(err);
@@ -29,4 +41,4 @@ router.post('/api/users', function(req, res, next) {
 });
 
 
-module.exports = router;
+module.exports = router;*/
