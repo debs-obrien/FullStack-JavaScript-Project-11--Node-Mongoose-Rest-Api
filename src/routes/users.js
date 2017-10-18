@@ -10,35 +10,41 @@ const mid = require('../middleware');
 
 /* GET home page. */
 router.get('/', mid.requireSignIn, function(req, res, next) {
-    res.json(req.LoggedInUser)
-  /*  .exec(function(err, user){
-        if(err) return next(err);
-        res.status(200);
-        return res.json(user);
-    });*/
-
+    //all errors are being handles by middleware so we don't need to add them here
+    //we just need to return the logged in user which we got from middleware
+    res.json(req.LoggedInUser);
+    res.status(200);
 });
 
 
 router.post('/', function(req, res, next) {
-    // use schema's `create` method to insert document into Mongo
-    User.create(req.body, function (err, user) {
-        if(!req.body.emailAddress || !req.body.fullName){
-            err.status = 400;
-        }
-        if (err)
-            if (err.name === "MongoError" && err.code === 11000) {
-            err = new Error();
-            err.message = 'That email already exists';
-            err.status = 400;
-            return next(err);
-        } else {
-            return next(err);
-        }
-        res.location('/');
-        res.status(201).json();
-        console.log(user)
-    });
+//check to see if that user exists
+    User.findOne({emailAddress:req.body.emailAddress})
+        .exec(function(err, user){
+            if(user){
+                err = new Error();
+                err.message = 'That email already exists';
+                err.status = 400;
+                return next(err);
+            }else{
+                // use schema's `create` method to insert document into Mongo
+                User.create(req.body, function (err, user) {
+                    //if user doesnt add a full name or email we cant create a user
+                    if(!req.body.emailAddress || !req.body.fullName || !req.body.password){
+                        err = new Error();
+                        err.message = 'we need an email address and fullname';
+                        err.status = 400;
+                        return next(err);
+                    }
+                    if (err) return next(err);
+                    res.location('/');
+                    res.status(201).json();
+                });
+            }
+
+        });
+
+
 });
 
 
