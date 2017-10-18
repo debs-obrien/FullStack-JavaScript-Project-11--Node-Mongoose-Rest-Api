@@ -2,24 +2,28 @@ const auth = require('basic-auth');
 const User = require('../models/user');
 
 function requireSignIn(req, res, next){
-    let credentials = auth(req);
+
+    const credentials = auth(req);
     if(credentials){
-        User.authenticate(credentials.name, credentials.pass, function(err, user) {
-            if (err || !user) {
+        User.authenticate(credentials.name, credentials.pass, function (err, user) {
+            if (err) {
                 let err = new Error();
-                err.message = 'You must sign in';
+                err.message = 'Name or password are incorrect or that user doesn\'t exist';
                 err.status = 401;
                 return next(err);
-            }else{
-                res.locals.currentUser = user;
+            } else {
+                req.LoggedInUser = user;
                 console.log(user);
-                return next();
+                next();
             }
 
         });
-    }else{
-        let err = new Error('couldn\'t authenticate');
-        next(err);
+
+    }else {
+        let err = new Error();
+        err.message = 'You are not authorized, you must sign in';
+        err.status = 401;
+        return next(err);
     }
 }
 module.exports.requireSignIn = requireSignIn;

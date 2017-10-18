@@ -23,10 +23,12 @@ const UserSchema = new mongoose.Schema({
 UserSchema.statics.authenticate = function(email, password, callback) {
     User.findOne({emailAddress: email})
         .exec(function (err, user) {
-            if (err) return callback(err);
+            if (err){
+                return callback(err);
+            }
             //make sure user exists
-            if (!user){
-                let err = new Error();
+            else if (!user){
+                err = new Error();
                 err.message = 'No user found with that email';
                 err.status = 401;
                 return callback(err);
