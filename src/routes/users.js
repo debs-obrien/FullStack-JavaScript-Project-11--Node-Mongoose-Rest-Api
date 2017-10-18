@@ -30,7 +30,7 @@ router.post('/', function(req, res, next) {
                 // use schema's `create` method to insert document into Mongo
                 User.create(req.body, function (err, user) {
                     //if user doesnt add a full name or email we cant create a user
-                    if(!req.body.emailAddress || !req.body.fullName || !req.body.password){
+                    if(!user.emailAddress || !user.fullName || !user.password){
                         err = new Error();
                         err.message = 'we need an email address and fullname';
                         err.status = 400;
@@ -38,6 +38,7 @@ router.post('/', function(req, res, next) {
                     }
                     if (err) return next(err);
                     res.location('/');
+                    console.log(user);
                     res.status(201).json();
                 });
             }
