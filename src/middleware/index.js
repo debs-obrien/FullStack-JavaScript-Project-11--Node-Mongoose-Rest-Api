@@ -6,14 +6,14 @@ function requireSignIn(req, res, next){
     const credentials = auth(req);
     if(credentials){
         User.authenticate(credentials.name, credentials.pass, function (err, user) {
-            if (err) {
+            //check if error or if user exists in database
+            if (err || !user) {
                 let err = new Error();
-                err.message = 'Name or password are incorrect or that user doesn\'t exist';
+                err.message = 'No user found with those credentials';
                 err.status = 401;
                 return next(err);
             } else {
                 req.LoggedInUser = user;
-                console.log(user);
                 next();
             }
 
