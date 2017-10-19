@@ -29,7 +29,7 @@ UserSchema.statics.authenticate = function(email, password, callback) {
             }
             //make sure user exists
             else if (!user){
-                err = new Error();
+                let err = new Error();
                 err.message = 'No user found with that email';
                 err.status = 401;
                 return callback(err);

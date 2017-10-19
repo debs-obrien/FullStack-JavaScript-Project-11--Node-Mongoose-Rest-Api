@@ -2,7 +2,7 @@ const auth = require('basic-auth');
 const User = require('../models/user');
 
 function requireSignIn(req, res, next){
-    //basic auth uses name and pass to test user credentials
+    //basic auth uses name and pass to test credentials credentials
     const credentials = auth(req);
     if(credentials){
         User.authenticate(credentials.name, credentials.pass, function (err, user) {
@@ -13,6 +13,7 @@ function requireSignIn(req, res, next){
                 return next(err);
             } else {
                 req.LoggedInUser = user;
+                console.log(user);
                 next();
             }
 
