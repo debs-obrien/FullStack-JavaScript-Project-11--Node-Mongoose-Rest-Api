@@ -16,15 +16,6 @@ router.get('/', mid.requireSignIn, function(req, res, next) {
     res.status(200);
 });
 
-//for testing to see if you get all users back
-/*router.get('/', mid.requireSignIn, function(req, res, next) {
-    User.find({}, function(err, users){
-        if(err) return next(err);
-        res.json(users);
-        console.log(users)
-    });
-});*/
-
 router.post('/', function(req, res, next) {
 //check to see if that user exists
     User.findOne({emailAddress:req.body.emailAddress})
@@ -39,21 +30,20 @@ router.post('/', function(req, res, next) {
                 User.create(req.body, function (err, user) {
                     //if user doesnt add a full name or email we cant create a user
                     if(!user.emailAddress || !user.fullName || !user.password){
-                        err = new Error();
-                        err.message = 'we need an email address and fullname and a password';
                         err.status = 400;
                         return next(err);
                     }
-                    if (err) return next(err);
-                    res.location('/');
-                    console.log(user);
-                    res.status(201).json();
+                    if (err){
+                        return next(err);
+                    } else{
+                        res.location('/');
+                        res.status(201).json();
+                    }
+
                 });
             }
         });
 });
-
-
 
 
 module.exports = router;

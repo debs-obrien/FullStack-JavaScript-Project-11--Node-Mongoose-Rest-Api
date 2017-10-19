@@ -19,6 +19,7 @@
     "mongoose": "^4.11.7",
     "mongoose-seeder": "^1.2.1",
     "morgan": "^1.7.0",
-    "pug": "^2.0.0-rc.3"
+    "pug": "^2.0.0-rc.3",
+    "validator": "^9.0.0"
   }
 }

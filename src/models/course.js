@@ -9,11 +9,11 @@ const CourseSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        required: true,
+        required: 'title is required',
     },
     description: {
         type: String,
-        required: true
+        required: 'description is required',
     },
     estimatedTime: {
         type: String,
@@ -27,11 +27,11 @@ const CourseSchema = new mongoose.Schema({
         },
         title: {
             type: String,
-            required: true
+            required: 'steps title is required',
         },
         description: {
             type: String,
-            required: true
+            required: 'steps description is required',
         },
     }],
     reviews: [{

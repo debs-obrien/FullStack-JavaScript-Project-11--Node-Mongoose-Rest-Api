@@ -1,21 +1,22 @@
 'use strict';
-
+const isEmail = require('validator').isEmail;
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
     fullName: {
         type: String,
-        required: true,
+        required: 'FullName is required',
     },
     emailAddress: {
         type: String,
-        required: true,
-        unique: true,
+        required: 'Email address is required',
+        unique: 'Email address must be unique',
+        validate: { validator: isEmail , message: '{VALUE} is not a valid email' }
     },
     password: {
         type: String,
-        required: true
+        required: 'Password is required',
     }
 });
 
