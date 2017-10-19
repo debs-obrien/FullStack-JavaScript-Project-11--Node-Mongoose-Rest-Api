@@ -5,14 +5,14 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const app = express();
-const http = require('http');
+//const http = require('http');
 const mongoose = require('mongoose');
-const routes = require('./routes');
 const jsonParser = require('body-parser').json;
 const seeder = require('mongoose-seeder'),
     data = require('./data/data.json');
 const courses = require('./routes/courses');
 const users = require('./routes/users');
+mongoose.Promise = require('bluebird');
 
 //set up database
 const db = mongoose.connect('mongodb://localhost:27017/courseRating', {
@@ -38,8 +38,8 @@ db.once('open', function() {
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'pug');
 
 // set our port
 app.set('port', process.env.PORT || 5000);
