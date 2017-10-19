@@ -5,7 +5,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const app = express();
-//const http = require('http');
+const http = require('http');
 const mongoose = require('mongoose');
 const jsonParser = require('body-parser').json;
 const seeder = require('mongoose-seeder'),
@@ -13,6 +13,7 @@ const seeder = require('mongoose-seeder'),
 const courses = require('./routes/courses');
 const users = require('./routes/users');
 mongoose.Promise = require('bluebird');
+
 
 //set up database
 const db = mongoose.connect('mongodb://localhost:27017/courseRating', {
@@ -71,7 +72,10 @@ app.use(function(err, req, res, next) {
   res.send(err);
 });
 
+
 // start listening on our port
-const server = app.listen(app.get('port'), function() {
+/*const server = app.listen(app.get('port'), function() {
   console.log('Express server is listening on port ' + server.address().port);
-});
+});*/
+
+module.exports = app;
