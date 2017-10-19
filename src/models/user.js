@@ -20,15 +20,16 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-//validate user
+/*---------------------------------------------------------------------
+validate user
+make sure user exists if(!user) error
+ ----------------------------------------------------------------------*/
 UserSchema.statics.authenticate = function(email, password, callback) {
     User.findOne({emailAddress: email})
         .exec(function (err, user) {
             if (err){
                 return callback(err);
-            }
-            //make sure user exists
-            else if (!user){
+            } else if (!user){
                 let err = new Error();
                 err.message = 'No user found with that email';
                 err.status = 401;
@@ -44,8 +45,9 @@ UserSchema.statics.authenticate = function(email, password, callback) {
         });
 
 };
-
-// hash password before saving to database
+/*---------------------------------------------------------------------
+hash password before saving to database
+ ----------------------------------------------------------------------*/
 UserSchema.pre('save', function(next) {
     let user = this;
     bcrypt.hash(user.password, 10, function(err, hash) {

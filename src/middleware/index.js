@@ -1,12 +1,15 @@
 const auth = require('basic-auth');
 const User = require('../models/user');
 
+/*---------------------------------------------------------------------
+middleware to check for sign in
+basic auth uses name and pass to test credentials credentials
+check if error or if user exists in database if (err || !user)
+ ----------------------------------------------------------------------*/
 function requireSignIn(req, res, next){
-    //basic auth uses name and pass to test credentials credentials
     const credentials = auth(req);
     if(credentials){
         User.authenticate(credentials.name, credentials.pass, function (err, user) {
-            //check if error or if user exists in database
             if (err || !user) {
                 let err = new Error();
                 err.message = 'No user found with those credentials';
@@ -16,7 +19,6 @@ function requireSignIn(req, res, next){
                 req.LoggedInUser = user;
                 next();
             }
-
         });
 
     }else {
