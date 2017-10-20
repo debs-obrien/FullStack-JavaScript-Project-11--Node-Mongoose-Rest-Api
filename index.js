@@ -28,7 +28,7 @@ db.once('open', function() {
     });
 });
 
-// view engine setup
+// view engine setup we don't have views so not needed for now
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'pug');
 
