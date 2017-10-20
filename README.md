@@ -25,9 +25,10 @@
 
 ### To run the application
 ```npm
-mongod
 npm install
+mongod
 npm start
+use Postman to test routes
 the app is served on port 3000
 
 For testing create db testDB
