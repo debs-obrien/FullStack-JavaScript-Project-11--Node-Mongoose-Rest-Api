@@ -6,16 +6,16 @@ const morgan = require('morgan');
 const path = require('path');
 const app = express();
 const http = require('http');
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 const jsonParser = require('body-parser').json;
-const seeder = require('mongoose-seeder'),
-    data = require('./data/data.json');
+//const seeder = require('mongoose-seeder'),
+    //data = require('./data/data.json');
 const courses = require('./routes/courses');
 const users = require('./routes/users');
-mongoose.Promise = require('bluebird');
+//mongoose.Promise = require('bluebird');
 
 
-//set up database
+/*//set up database
 const db = mongoose.connect('mongodb://localhost:27017/courseRating', {
     useMongoClient: true
 });
@@ -43,7 +43,7 @@ db.once('open', function() {
 //app.set('view engine', 'pug');
 
 // set our port
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 5000);*/
 
 // morgan gives us http request logging
 app.use(morgan('dev'));
