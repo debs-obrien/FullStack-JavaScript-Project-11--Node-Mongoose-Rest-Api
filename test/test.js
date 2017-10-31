@@ -8,7 +8,6 @@ const app = require('../src/');
 require('colors');
 
 describe('[ -- Users Route -- ]'.yellow, function(){
-    this.timeout(20000);
     before(function (done) {
 
         const db = mongoose.connect('mongodb://localhost:27017/testDB', {
@@ -35,7 +34,6 @@ describe('[ -- Users Route -- ]'.yellow, function(){
     });
 
     it('should get all users', function(done){
-        this.timeout(20000);
         request(app)
             .get('/api/users')
             .set('Accept', 'application/json')
@@ -49,7 +47,6 @@ describe('[ -- Users Route -- ]'.yellow, function(){
 
     });
     it('should return error when not authorized', function(done){
-        this.timeout(20000);
         request(app)
             .get('/api/users')
             .set('Accept', 'application/json')
